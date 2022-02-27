@@ -104,6 +104,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.4"
+  flutter_switch:
+    dependency: "direct main"
+    description:
+      name: flutter_switch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -179,6 +186,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.2"
+  search_choices:
+    dependency: "direct main"
+    description:
+      name: search_choices
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.19"
   sky_engine:
     dependency: transitive
     description: flutter

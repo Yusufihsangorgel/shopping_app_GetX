@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shopping_app/controllers/productcontroller.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/screens/push_notificationsScreen.dart';
+import 'package:shopping_app/screens/settingsScreen.dart';
 import 'package:shopping_app/widgets/product_tile.dart';
 import 'package:shopping_app/widgets/mySpinkit.dart';
 
@@ -21,11 +23,28 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(
+              Icons.settings,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Get.to(SettingsScreen());
+            },
+          ),
+          IconButton(
+            icon: Icon(
               Icons.shopping_cart,
               color: Colors.black,
             ),
             onPressed: () {},
-          )
+          ),
+          IconButton(
+              onPressed: () {
+                Get.to(PushNotifications());
+              },
+              icon: Icon(
+                Icons.notification_add,
+                color: Colors.black,
+              ))
         ],
       ),
       body: Column(
