@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/controllers/settingscontroller.dart';
+import 'package:shopping_app/widgets/city_tile.dart';
+import 'package:shopping_app/widgets/myDivider.dart';
 import 'package:shopping_app/widgets/mySize.dart';
-import 'package:search_choices/search_choices.dart';
+import 'package:shopping_app/widgets/mySpinkit.dart';
 import '../controllers/pushNotifications_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -20,22 +23,39 @@ class SettingsScreen extends StatelessWidget {
       Get.put(PushNotificationsController());
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
+          backgroundColor: _scaffoldBgcolor,
           appBar: AppBar(
             title: Text('Ayarlar'),
           ),
           body: Column(
             children: [
-              SearchChoices.single(
-                items: items,
-                value: settingsController.selectedValueSingleDialog.value,
-                hint: "Select one",
-                searchHint: "Select one",
-                onChanged: (value) {
-                  settingsController.selectedValueSingleDialog.value = value;
-                },
-                isExpanded: true,
+              MySize(height: 20, width: 10),
+              Text(
+                'Semt Seçiniz',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: _textColor),
+              ),
+              Expanded(
+                child: Obx(() {
+                  if (settingsController.isLoading.isTrue) {
+                    return (mySpinKit.spinkit);
+                  } else
+                    return StaggeredGridView.countBuilder(
+                      crossAxisCount: 2,
+                      itemCount: settingsController.cityList.length,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      itemBuilder: (context, index) {
+                        return CityTile(settingsController.cityList[index]);
+                      },
+                      staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                    );
+                }),
               ),
               MySize(height: 30, width: 10),
+              MyDivider(color: _textColor),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -84,8 +104,16 @@ class SettingsScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child:
                           pushNotificationsController.statusDark.value == true
-                              ? Text("Karanlık Mod açık")
-                              : Text("Karanlık mod kapalı")),
+                              ? Text("Karanlık Mod açık",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: _textColor))
+                              : Text("Karanlık mod kapalı",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: _textColor))),
                 ],
               ),
             ],

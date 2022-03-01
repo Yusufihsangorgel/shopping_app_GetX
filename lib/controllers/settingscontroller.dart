@@ -1,11 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shopping_app/models/country.dart';
+import 'package:shopping_app/models/city.dart';
+
 import 'package:shopping_app/services/city_services.dart';
 
 class SettingsController extends GetxController {
   var cityList = <Product>[].obs;
+  var isLoading = true.obs;
 
-  late RxString selectedValueSingleDialog = "".obs;
   @override
   void onInit() {
     fetchCity();
@@ -13,12 +15,17 @@ class SettingsController extends GetxController {
   }
 
   void fetchCity() async {
+    isLoading(true);
     try {
-      var products = await CityServices.fetchProducts();
-      if (products != null) {
-        cityList.value = products as List<Product>;
+      var citys = await CityServices.fetchProducts();
+      print('burda takıldı 1');
+      if (citys != null) {
+        print('burda takıldı 2');
+        cityList.value = citys;
+        isLoading(false);
       }
     } on Exception catch (e) {
+      print('burda takıldı 3');
       print(e);
     }
   }

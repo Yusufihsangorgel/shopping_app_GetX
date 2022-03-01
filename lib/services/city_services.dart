@@ -1,10 +1,10 @@
 import 'package:http/http.dart' as http;
-import 'package:shopping_app/models/country.dart';
+import 'package:shopping_app/models/city.dart';
 
 class CityServices {
   static var client = http.Client();
 
-  static Future<Product?> fetchProducts() async {
+  static Future<List<Product>?> fetchProducts() async {
     var response =
         await client.get(Uri.parse('https://api.ubilisim.com/postakodu/il/34'));
     if (response.statusCode == 200) {
