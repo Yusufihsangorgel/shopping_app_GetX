@@ -4,14 +4,12 @@
 
 import 'dart:convert';
 
-List<Product> productFromJson(String str) =>
-    List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
+Postakodu productFromJson(String str) => Postakodu.fromJson(json.decode(str));
 
-String productToJson(List<Product> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String productToJson(Postakodu data) => json.encode(data.toJson());
 
-class Product {
-  Product({
+class Postakodu {
+  Postakodu({
     required this.plaka,
     required this.il,
     required this.ilce,
@@ -20,46 +18,29 @@ class Product {
     required this.pk,
   });
 
-  String plaka;
-  Il? il;
-  String ilce;
-  String semtBucakBelde;
-  String mahalle;
-  String pk;
+  String? plaka;
+  String? il;
+  String? ilce;
+  String? semtBucakBelde;
+  String? mahalle;
+  String? pk;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-        plaka: json["plaka"],
-        il: ilValues.map[json["il"]],
-        ilce: json["ilce"],
-        semtBucakBelde: json["semt_bucak_belde"],
-        mahalle: json["mahalle"],
-        pk: json["pk"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "plaka": plaka,
-        "il": ilValues.reverse[il],
-        "ilce": ilce,
-        "semt_bucak_belde": semtBucakBelde,
-        "mahalle": mahalle,
-        "pk": pk,
-      };
-}
-
-enum Il { STANBUL }
-
-final ilValues = EnumValues({"İSTANBUL": Il.STANBUL});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
+  Postakodu.fromJson(Map<String, dynamic> json) {
+    plaka = json['plaka'];
+    il = json['il'];
+    ilce = json['ilce'];
+    semtBucakBelde = json['semt_bucak_belde'];
+    mahalle = json['mahalle'];
+    pk = json['pk'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['plaka'] = this.plaka;
+    data['il'] = this.il;
+    data['ilce'] = this.ilce;
+    data['semt_bucak_belde'] = this.semtBucakBelde;
+    data['mahalle'] = this.mahalle;
+    data['pk'] = this.pk;
+    return data;
   }
 }

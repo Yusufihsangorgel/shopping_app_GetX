@@ -41,9 +41,13 @@ dependencies:
   animated_login: ^1.5.1
   dialog_context: ^0.1.2
   flutter_switch: ^0.3.2
-  search_choices: ^2.0.19
-  material_floating_search_bar: ^0.3.6
-  material_design_icons_flutter: ^5.0.6595
+
+  paginated_search_bar: ^1.1.2
+  dio: ^4.0.4
+  adaptive_dialog: ^1.4.0
+  flutter_animated_dialog: ^2.0.1
+  form_validator: ^1.0.2
+
 
 
 dev_dependencies:

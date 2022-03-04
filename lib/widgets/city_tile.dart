@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:shopping_app/models/city.dart';
 
 class CityTile extends StatelessWidget {
-  final Product product;
-  const CityTile(this.product);
+  final Postakodu postakodu;
+  const CityTile(this.postakodu);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CityTile extends StatelessWidget {
               ],
             ),
             SizedBox(height: 8),
-            Text('\$${product.ilce}',
+            Text('\$${postakodu.ilce}',
                 style: TextStyle(fontSize: 32, fontFamily: 'avenir')),
           ],
         ),

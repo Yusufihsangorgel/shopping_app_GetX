@@ -37,23 +37,6 @@ class SettingsScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: _textColor),
               ),
-              Expanded(
-                child: Obx(() {
-                  if (settingsController.isLoading.isTrue) {
-                    return (mySpinKit.spinkit);
-                  } else
-                    return StaggeredGridView.countBuilder(
-                      crossAxisCount: 2,
-                      itemCount: settingsController.cityList.length,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      itemBuilder: (context, index) {
-                        return CityTile(settingsController.cityList[index]);
-                      },
-                      staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                    );
-                }),
-              ),
               MySize(height: 30, width: 10),
               MyDivider(color: _textColor),
               Row(
