@@ -34,8 +34,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 style: TextStyle(fontSize: 30, color: Colors.white),
               ),
               TextFormField(
-                validator:
-                    ValidationBuilder().email().maxLength(5, "anan").build(),
+                validator: ValidationBuilder()
+                    .email("Lütfen minimum 5, maximum 50 karakter giriniz")
+                    .maxLength(50)
+                    .build(),
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   labelText: 'Email',

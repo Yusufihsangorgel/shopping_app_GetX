@@ -73,7 +73,8 @@ class HomeScreen extends StatelessWidget {
               if (productController.isLoading.isTrue) {
                 return (mySpinKit.spinkit);
               } else
-                return StaggeredGridView.countBuilder(
+                // ignore: curly_braces_in_flow_control_structures
+                return AlignedGridView.count(
                   crossAxisCount: 2,
                   itemCount: productController.productList.length,
                   crossAxisSpacing: 16,
@@ -81,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ProductTile(productController.productList[index]);
                   },
-                  staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                  //  Tile(index) => StaggeredTile.fit(1),
                 );
             }),
           )

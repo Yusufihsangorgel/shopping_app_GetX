@@ -1,0 +1,126 @@
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:sign_in_apple/sign_in_apple.dart';
+import 'package:sign_in_apple/apple_id_user.dart';
+
+class AppleServices extends StatefulWidget {
+  @override
+  _AppleServices createState() => _AppleServices();
+}
+
+class _AppleServices extends State<AppleServices> {
+  String _name = 'Unknown';
+  String _mail = 'Unknown';
+  String _userIdentify = 'Unknown';
+  String _authorizationCode = 'Unknown';
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    SignInApple.handleAppleSignInCallBack(
+        onCompleteWithSignIn: (AppleIdUser user) async {
+      print("flutter receiveCode: \n");
+      print(user.authorizationCode);
+      print("flutter receiveToken \n");
+      print(user.identifyToken);
+      setState(() {
+        _name = user.name ?? ""; // may be null or "" if use set privacy
+        _mail = user.mail ?? ""; // may be null or "" if use set privacy
+        _userIdentify = user.userIdentifier;
+        _authorizationCode = user.authorizationCode;
+      });
+    }, onCompleteWithError: (AppleSignInErrorCode code) async {
+      var errorMsg = "unknown";
+      switch (code) {
+        case AppleSignInErrorCode.canceled:
+          errorMsg = "user canceled request";
+          break;
+        case AppleSignInErrorCode.failed:
+          errorMsg = "request fail";
+          break;
+        case AppleSignInErrorCode.invalidResponse:
+          errorMsg = "request invalid response";
+          break;
+        case AppleSignInErrorCode.notHandled:
+          errorMsg = "request not handled";
+          break;
+        case AppleSignInErrorCode.unknown:
+          errorMsg = "request fail unknown";
+          break;
+      }
+      print(errorMsg);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('userIdentify is: $_userIdentify'),
+              SizedBox(
+                height: 10,
+              ),
+              Text('name is: $_name'),
+              SizedBox(
+                height: 10,
+              ),
+              Text('mail is: $_mail'),
+              SizedBox(
+                height: 10,
+              ),
+              Text('auth code is: $_authorizationCode'),
+              SizedBox(
+                height: 10,
+              ),
+              Text('native system button:'),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              AppleSignInSystemButton(
+                width: 250,
+                height: 50,
+                buttonStyle: AppleSignInSystemButtonStyle.black,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text('custom flutter button：'),
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  SignInApple.clickAppleSignIn();
+                },
+                child: Container(
+                  width: 56,
+                  height: 56,
+                  child: Image.asset(
+                    "images/apple_logo.png",
+                    width: 56,
+                    height: 56,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

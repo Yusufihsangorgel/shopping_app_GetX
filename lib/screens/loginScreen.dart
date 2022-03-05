@@ -4,6 +4,10 @@ import 'package:get/get.dart';
 import 'package:shopping_app/screens/forgotpasswordScreen.dart';
 
 import 'package:shopping_app/screens/homeScreen.dart';
+import 'package:shopping_app/services/apple_services.dart';
+import 'package:shopping_app/services/google_services.dart';
+import 'dart:io' show Platform;
+import '../services/facebook_services.dart';
 
 class LoginScreen extends StatefulWidget {
   /// Simulates the multilanguage, you will implement your own logic.
@@ -146,7 +150,16 @@ class LoginFunctions {
   Future<String?> socialLogin(String type) async {
     DialogBuilder(context).showLoadingDialog();
     await Future.delayed(const Duration(seconds: 2));
-    Get.to(HomeScreen());
+    if (type == 'Google') {
+      Get.to(SignInDemo());
+    }
+    if (type == 'Facebook') {
+      Get.to(FacebookServices(plugin: plugin));
+    }
+    if (Platform.isIOS && type == 'Apple') {
+      Get.to(AppleServices());
+    }
+
     DialogBuilder(context)
         .showResultDialog('Successful social login with $type.');
   }
@@ -157,6 +170,28 @@ class LoginFunctions {
     Get.to(ForgotPassword());
   }
 }
+
+/*Future<String?> socialLogin(String type) async {
+    DialogBuilder(context).showLoadingDialog();
+    DialogBuilder(context)
+        .showResultDialog('Successful social login with $type.');
+    if (type == 'Google') {
+
+    
+      Get.to(SignInDemo());
+    }
+    if (type == 'Facebook') {
+     
+      Get.to(FacebookServices(plugin: plugin));
+   
+    } if(type == 'Apple') {
+      DialogBuilder(context).showLoadingDialog();
+
+     
+    }
+      DialogBuilder(context)
+          .showResultDialog('Successful social login with $type.');
+  }*/
 
 class DialogBuilder {
   /// Builds various dialogs with different methods.
