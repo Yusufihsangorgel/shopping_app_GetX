@@ -1,123 +1,91 @@
+import 'dart:io';
+// Needed because we can't import `dart:html` into a mobile app,
+// while on the flip-side access to `dart:io` throws at runtime (hence the `kIsWeb` check below)
+import 'html_shim.dart' if (dart.library.html) 'dart:html' show window;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:sign_in_apple/sign_in_apple.dart';
-import 'package:sign_in_apple/apple_id_user.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AppleServices extends StatefulWidget {
+  const AppleServices({Key? key}) : super(key: key);
+
   @override
   _AppleServices createState() => _AppleServices();
 }
 
 class _AppleServices extends State<AppleServices> {
-  String _name = 'Unknown';
-  String _mail = 'Unknown';
-  String _userIdentify = 'Unknown';
-  String _authorizationCode = 'Unknown';
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    SignInApple.handleAppleSignInCallBack(
-        onCompleteWithSignIn: (AppleIdUser user) async {
-      print("flutter receiveCode: \n");
-      print(user.authorizationCode);
-      print("flutter receiveToken \n");
-      print(user.identifyToken);
-      setState(() {
-        _name = user.name ?? ""; // may be null or "" if use set privacy
-        _mail = user.mail ?? ""; // may be null or "" if use set privacy
-        _userIdentify = user.userIdentifier;
-        _authorizationCode = user.authorizationCode;
-      });
-    }, onCompleteWithError: (AppleSignInErrorCode code) async {
-      var errorMsg = "unknown";
-      switch (code) {
-        case AppleSignInErrorCode.canceled:
-          errorMsg = "user canceled request";
-          break;
-        case AppleSignInErrorCode.failed:
-          errorMsg = "request fail";
-          break;
-        case AppleSignInErrorCode.invalidResponse:
-          errorMsg = "request invalid response";
-          break;
-        case AppleSignInErrorCode.notHandled:
-          errorMsg = "request not handled";
-          break;
-        case AppleSignInErrorCode.unknown:
-          errorMsg = "request fail unknown";
-          break;
-      }
-      print(errorMsg);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Example app: Sign in with Apple'),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('userIdentify is: $_userIdentify'),
-              SizedBox(
-                height: 10,
-              ),
-              Text('name is: $_name'),
-              SizedBox(
-                height: 10,
-              ),
-              Text('mail is: $_mail'),
-              SizedBox(
-                height: 10,
-              ),
-              Text('auth code is: $_authorizationCode'),
-              SizedBox(
-                height: 10,
-              ),
-              Text('native system button:'),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              AppleSignInSystemButton(
-                width: 250,
-                height: 50,
-                buttonStyle: AppleSignInSystemButtonStyle.black,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text('custom flutter button：'),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  SignInApple.clickAppleSignIn();
-                },
-                child: Container(
-                  width: 56,
-                  height: 56,
-                  child: Image.asset(
-                    "images/apple_logo.png",
-                    width: 56,
-                    height: 56,
+        body: Container(
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: SignInWithAppleButton(
+              onPressed: () async {
+                final credential = await SignInWithApple.getAppleIDCredential(
+                  scopes: [
+                    AppleIDAuthorizationScopes.email,
+                    AppleIDAuthorizationScopes.fullName,
+                  ],
+                  webAuthenticationOptions: WebAuthenticationOptions(
+                    // TODO: Set the `clientId` and `redirectUri` arguments to the values you entered in the Apple Developer portal during the setup
+                    clientId:
+                        'de.lunaone.flutter.signinwithappleexample.service',
+
+                    redirectUri:
+                        // For web your redirect URI needs to be the host of the "current page",
+                        // while for Android you will be using the API server that redirects back into your app via a deep link
+                        kIsWeb
+                            ? Uri.parse('https://${window.location.host}/')
+                            : Uri.parse(
+                                'https://flutter-sign-in-with-apple-example.glitch.me/callbacks/sign_in_with_apple',
+                              ),
                   ),
-                ),
-              ),
-            ],
+                  // TODO: Remove these if you have no need for them
+                  nonce: 'example-nonce',
+                  state: 'example-state',
+                );
+
+                // ignore: avoid_print
+                print(credential);
+
+                // This is the endpoint that will convert an authorization code obtained
+                // via Sign in with Apple into a session in your system
+                final signInWithAppleEndpoint = Uri(
+                  scheme: 'https',
+                  host: 'flutter-sign-in-with-apple-example.glitch.me',
+                  path: '/sign_in_with_apple',
+                  queryParameters: <String, String>{
+                    'code': credential.authorizationCode,
+                    if (credential.givenName != null)
+                      'firstName': credential.givenName!,
+                    if (credential.familyName != null)
+                      'lastName': credential.familyName!,
+                    'useBundleId':
+                        !kIsWeb && (Platform.isIOS || Platform.isMacOS)
+                            ? 'true'
+                            : 'false',
+                    if (credential.state != null) 'state': credential.state!,
+                  },
+                );
+
+                final session = await http.Client().post(
+                  signInWithAppleEndpoint,
+                );
+
+                // If we got this far, a session based on the Apple ID credential has been created in your system,
+                // and you can now set this as the app's session
+                // ignore: avoid_print
+                print(session);
+              },
+            ),
           ),
         ),
       ),

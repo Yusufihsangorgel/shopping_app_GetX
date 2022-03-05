@@ -71,13 +71,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  dialog_context:
-    dependency: "direct main"
-    description:
-      name: dialog_context
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   dio:
     dependency: "direct main"
     description:
@@ -296,13 +289,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
-  sign_in_apple:
-    dependency: "direct main"
-    description:
-      name: sign_in_apple
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   sign_in_with_apple:
     dependency: "direct main"
     description:
