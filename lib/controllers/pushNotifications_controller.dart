@@ -5,7 +5,7 @@ class PushNotificationsController extends GetxController {
   final status2 = true.obs;
   final status3 = false.obs;
   final statusDark = false.obs;
-
+  final locator = false.obs;
   @override
   void onInit() {
     statusChange();

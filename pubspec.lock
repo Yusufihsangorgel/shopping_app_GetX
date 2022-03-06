@@ -78,13 +78,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.4"
-  endless:
-    dependency: transitive
-    description:
-      name: endless
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.6.0"
   fake_async:
     dependency: transitive
     description:
@@ -111,13 +104,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  flutter_login_facebook:
-    dependency: "direct main"
-    description:
-      name: flutter_login_facebook
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.1"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -212,13 +198,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  list_ext:
-    dependency: transitive
-    description:
-      name: list_ext
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   matcher:
     dependency: transitive
     description:
@@ -247,13 +226,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  paginated_search_bar:
-    dependency: "direct main"
-    description:
-      name: paginated_search_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.2"
   path:
     dependency: transitive
     description:
@@ -261,13 +233,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  plugin_platform_interface:
-    dependency: transitive
-    description:
-      name: plugin_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.2"
   provider:
     dependency: transitive
     description:
@@ -282,34 +247,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1+1"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.27.3"
-  sign_in_with_apple:
-    dependency: "direct main"
-    description:
-      name: sign_in_with_apple
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.3.0"
-  sign_in_with_apple_platform_interface:
-    dependency: transitive
-    description:
-      name: sign_in_with_apple_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  sign_in_with_apple_web:
-    dependency: transitive
-    description:
-      name: sign_in_with_apple_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -329,13 +266,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
-  state_property:
-    dependency: transitive
-    description:
-      name: state_property
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1"
   stream_channel:
     dependency: transitive
     description:

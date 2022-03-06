@@ -4,10 +4,9 @@ import 'package:get/get.dart';
 import 'package:shopping_app/screens/forgotpasswordScreen.dart';
 
 import 'package:shopping_app/screens/homeScreen.dart';
-import 'package:shopping_app/services/apple_services.dart';
+
 import 'package:shopping_app/services/google_services.dart';
 import 'dart:io' show Platform;
-import '../services/facebook_services.dart';
 
 class LoginScreen extends StatefulWidget {
   /// Simulates the multilanguage, you will implement your own logic.
@@ -117,11 +116,11 @@ class _LoginScreenState extends State<LoginScreen> {
             iconPath: 'images/google.png'),
         SocialLogin(
             callback: () async =>
-                LoginFunctions(context).socialLogin('Facebook'),
-            iconPath: 'images/facebook.png'),
-        SocialLogin(
+                LoginFunctions(context).socialLogin('Misafir'),
+            iconPath: 'images/customer.jpeg'),
+        /*SocialLogin(
             callback: () async => LoginFunctions(context).socialLogin('Apple'),
-            iconPath: 'images/apple.png'),
+            iconPath: 'images/apple.png'),*/
       ];
 }
 
@@ -153,15 +152,15 @@ class LoginFunctions {
     if (type == 'Google') {
       Get.to(SignInDemo());
     }
-    if (type == 'Facebook') {
-      Get.to(FacebookServices(plugin: plugin));
+    if (type == 'Misafir') {
+      Get.to(HomeScreen());
     }
-    if (Platform.isIOS && type == 'Apple') {
-      Get.to(AppleServices());
-    }
+    // if (type == 'Apple') {
+    // Get.to(HomeScreen());
+    //}
 
     DialogBuilder(context)
-        .showResultDialog('Successful social login with $type.');
+        .showResultDialog(' $type ile başarılı giriş yaptınız');
   }
 
   Future<String?> onForgotPassword(String email) async {
