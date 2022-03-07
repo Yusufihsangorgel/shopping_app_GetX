@@ -118,9 +118,9 @@ class _LoginScreenState extends State<LoginScreen> {
             callback: () async =>
                 LoginFunctions(context).socialLogin('Misafir'),
             iconPath: 'images/customer.jpeg'),
-        /*SocialLogin(
+        SocialLogin(
             callback: () async => LoginFunctions(context).socialLogin('Apple'),
-            iconPath: 'images/apple.png'),*/
+            iconPath: 'images/apple.png'),
       ];
 }
 
@@ -155,9 +155,9 @@ class LoginFunctions {
     if (type == 'Misafir') {
       Get.to(HomeScreen());
     }
-    // if (type == 'Apple') {
-    // Get.to(HomeScreen());
-    //}
+    if (type == 'Apple') {
+      Get.to(HomeScreen());
+    }
 
     DialogBuilder(context)
         .showResultDialog(' $type ile başarılı giriş yaptınız');
